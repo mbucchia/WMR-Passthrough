@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XR_APILAYER_NOVENDOR_wmr_passthrough", "XR_APILAYER_NOVENDOR_wmr_passthrough\XR_APILAYER_NOVENDOR_wmr_passthrough.vcxproj", "{93D573D0-634F-4BA0-8FE0-FB63D7D00A05}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9E575545-3572-4B43-BFCF-D03A02AA38CE} = {9E575545-3572-4B43-BFCF-D03A02AA38CE}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{A53ED6CB-95D3-4833-8A16-C6A588F16F6E}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,6 +23,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{BA77
 		scripts\Uninstall-Layer.ps1 = scripts\Uninstall-Layer.ps1
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XRmonitors", "XRmonitors", "{56D4D7E1-DED4-491E-963D-43A813400872}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MrCamClient", "external\XRmonitors\mrcam_client\msvc\MrCamClient.vcxproj", "{9CC3FFCB-6834-43BA-A3C5-8F4C8BED8363}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreLib", "external\XRmonitors\core\msvc\CoreLib.vcxproj", "{7E3AA4A7-856D-4211-9FA0-3292037CB11E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Protocols", "external\XRmonitors\protocols\msvc\Protocols.vcxproj", "{EE88B3F5-85E0-459C-84F4-920345EE8C90}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XRmonitorsClient", "XRmonitorsClient\XRmonitorsClient.vcxproj", "{9E575545-3572-4B43-BFCF-D03A02AA38CE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9CC3FFCB-6834-43BA-A3C5-8F4C8BED8363} = {9CC3FFCB-6834-43BA-A3C5-8F4C8BED8363}
+	EndProjectSection
+EndProject
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "hello_xr", "..\..\OpenXR-SDK-Source\src\tests\hello_xr\x64\Debug\hello_xr.exe", "{79D53F82-61DE-4697-8C49-2CF8BB85C559}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = C:\Users\mbucc\Desktop\XR\OpenXR-SDK-Source\out\build\x64-Debug\src\tests\hello_xr\hello_xr.exe
+		RemoteMachine = SIRIUS
+		StartingDirectory = C:\Users\mbucc\Desktop\XR\OpenXR-SDK-Source\out\build\x64-Debug\src\tests\hello_xr
+		Arguments = -g d3d12 -bm Additive
+		Environment = Default
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+		IORedirection = Auto
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -30,12 +61,33 @@ Global
 		{93D573D0-634F-4BA0-8FE0-FB63D7D00A05}.Debug|x64.Build.0 = Debug|x64
 		{93D573D0-634F-4BA0-8FE0-FB63D7D00A05}.Release|x64.ActiveCfg = Release|x64
 		{93D573D0-634F-4BA0-8FE0-FB63D7D00A05}.Release|x64.Build.0 = Release|x64
+		{9CC3FFCB-6834-43BA-A3C5-8F4C8BED8363}.Debug|x64.ActiveCfg = DebugStatic|x64
+		{9CC3FFCB-6834-43BA-A3C5-8F4C8BED8363}.Debug|x64.Build.0 = DebugStatic|x64
+		{9CC3FFCB-6834-43BA-A3C5-8F4C8BED8363}.Release|x64.ActiveCfg = ReleaseStatic|x64
+		{9CC3FFCB-6834-43BA-A3C5-8F4C8BED8363}.Release|x64.Build.0 = ReleaseStatic|x64
+		{7E3AA4A7-856D-4211-9FA0-3292037CB11E}.Debug|x64.ActiveCfg = DebugStatic|x64
+		{7E3AA4A7-856D-4211-9FA0-3292037CB11E}.Debug|x64.Build.0 = DebugStatic|x64
+		{7E3AA4A7-856D-4211-9FA0-3292037CB11E}.Release|x64.ActiveCfg = ReleaseStatic|x64
+		{7E3AA4A7-856D-4211-9FA0-3292037CB11E}.Release|x64.Build.0 = ReleaseStatic|x64
+		{EE88B3F5-85E0-459C-84F4-920345EE8C90}.Debug|x64.ActiveCfg = DebugStatic|x64
+		{EE88B3F5-85E0-459C-84F4-920345EE8C90}.Debug|x64.Build.0 = DebugStatic|x64
+		{EE88B3F5-85E0-459C-84F4-920345EE8C90}.Release|x64.ActiveCfg = ReleaseStatic|x64
+		{EE88B3F5-85E0-459C-84F4-920345EE8C90}.Release|x64.Build.0 = ReleaseStatic|x64
+		{9E575545-3572-4B43-BFCF-D03A02AA38CE}.Debug|x64.ActiveCfg = Debug|x64
+		{9E575545-3572-4B43-BFCF-D03A02AA38CE}.Debug|x64.Build.0 = Debug|x64
+		{9E575545-3572-4B43-BFCF-D03A02AA38CE}.Release|x64.ActiveCfg = Release|x64
+		{9E575545-3572-4B43-BFCF-D03A02AA38CE}.Release|x64.Build.0 = Release|x64
+		{79D53F82-61DE-4697-8C49-2CF8BB85C559}.Debug|x64.ActiveCfg = Release|x64
+		{79D53F82-61DE-4697-8C49-2CF8BB85C559}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BA775DE9-671E-4E3B-92AC-9828C2AAF490} = {A53ED6CB-95D3-4833-8A16-C6A588F16F6E}
+		{9CC3FFCB-6834-43BA-A3C5-8F4C8BED8363} = {56D4D7E1-DED4-491E-963D-43A813400872}
+		{7E3AA4A7-856D-4211-9FA0-3292037CB11E} = {56D4D7E1-DED4-491E-963D-43A813400872}
+		{EE88B3F5-85E0-459C-84F4-920345EE8C90} = {56D4D7E1-DED4-491E-963D-43A813400872}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {07E77829-9766-4585-AC6C-0A28BA014E77}

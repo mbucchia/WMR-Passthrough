@@ -20,58 +20,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
+#include "pch.h"
 
-// Standard library.
-#include <array>
-#include <chrono>
-#include <cstdarg>
-#include <ctime>
-#include <iomanip>
-#include <iostream>
-#include <filesystem>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <memory>
-#include <map>
-#include <optional>
-#include <vector>
+#include "CameraClientWrapper.h"
 
-using namespace std::chrono_literals;
+namespace {
 
-// Windows header files.
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-#include <windows.h>
-#include <unknwn.h>
-#include <wrl.h>
+    class CameraClientWrapper : public ICameraClientWrapper {
+      public:
+        CameraClientWrapper() {
+            m_cameraClient.Start();
+        }
 
-using Microsoft::WRL::ComPtr;
+        ~CameraClientWrapper() override {
+            m_cameraClient.Stop();
+        };
 
-// Direct3D.
-#include <d3d11.h>
-#include <d3d12.h>
-#include <d3d11on12.h>
-#include <d3dcompiler.h>
+        bool AcquireNextFrame(core::CameraFrame& frame) override {
+            return m_cameraClient.AcquireNextFrame(frame);
+        }
 
-// OpenXR + Windows-specific definitions.
-#define XR_NO_PROTOTYPES
-#define XR_USE_PLATFORM_WIN32
-#define XR_USE_GRAPHICS_API_D3D11
-#define XR_USE_GRAPHICS_API_D3D12
-#include <openxr/openxr.h>
-#include <openxr/openxr_platform.h>
+        void ReleaseFrame() override {
+            m_cameraClient.ReleaseFrame();
+        }
 
-// OpenXR loader interfaces.
-#include <loader_interfaces.h>
+      private:
+        core::CameraClient m_cameraClient;
+    };
 
-// OpenXR utilities.
-#include <XrError.h>
-#include <XrMath.h>
+} // namespace
 
-// FMT formatter.
-#include <fmt/format.h>
-
-// XRmonitors
-#include <CameraClient.hpp>
-#include <CameraClientWrapper.h>
+std::unique_ptr<ICameraClientWrapper> createCameraClientWrapper() {
+    return std::make_unique<CameraClientWrapper>();
+}
