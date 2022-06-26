@@ -592,10 +592,11 @@ float4 psMain(PSVertex input) : SV_TARGET {
                 desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 
                 ColorAdjustmentConstantBuffer colorAdjustment;
-                colorAdjustment.colorAdjustment.x = 1.f;
-                colorAdjustment.colorAdjustment.y = 1.f;
-                colorAdjustment.colorAdjustment.z = 1.f;
-                colorAdjustment.colorAdjustment.w = 1.f;
+#ifdef XR_WMR_PASSTHROUGH_COLOR_ADJUSTMENT
+                colorAdjustment.colorAdjustment = {XR_WMR_PASSTHROUGH_COLOR_ADJUSTMENT, 1.f};
+#else
+                colorAdjustment.colorAdjustment = {1.f, 1.f, 1.f, 1.f};
+#endif
 
                 D3D11_SUBRESOURCE_DATA initialData;
                 ZeroMemory(&initialData, sizeof(initialData));
@@ -952,10 +953,15 @@ float4 psMain(PSVertex input) : SV_TARGET {
                                                                           environmentBlendModes);
             if (XR_SUCCEEDED(result) && isVrSystem(systemId) &&
                 viewConfigurationType == XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO) {
-                // Advertise XR_ENVIRONMENT_BLEND_MODE_ADDITIVE.
+                // Advertise XR_ENVIRONMENT_BLEND_MODE_ALPHA_BLEND.
                 if (environmentBlendModes) {
                     if (environmentBlendModeCapacityInput >= *environmentBlendModeCountOutput + 1) {
-                        environmentBlendModes[*environmentBlendModeCountOutput] = XR_ENVIRONMENT_BLEND_MODE_ADDITIVE;
+                        environmentBlendModes[*environmentBlendModeCountOutput] = XR_ENVIRONMENT_BLEND_MODE_ALPHA_BLEND;
+
+#ifdef XR_WMR_PASSTHROUGH_PREFER_ALPHA_BLEND
+                        // Make XR_ENVIRONMENT_BLEND_MODE_ALPHA_BLEND the preferred mode.
+                        std::swap(environmentBlendModes[0], environmentBlendModes[*environmentBlendModeCountOutput]);
+#endif
                     } else {
                         result = XR_ERROR_SIZE_INSUFFICIENT;
                     }
@@ -1014,8 +1020,7 @@ float4 psMain(PSVertex input) : SV_TARGET {
 
         XrResult xrEndFrame(XrSession session, const XrFrameEndInfo* frameEndInfo) override {
             if (!isVrSession(session) || !m_graphicsResources ||
-                !(frameEndInfo->environmentBlendMode == XR_ENVIRONMENT_BLEND_MODE_ADDITIVE ||
-                  frameEndInfo->environmentBlendMode == XR_ENVIRONMENT_BLEND_MODE_ALPHA_BLEND)) {
+                frameEndInfo->environmentBlendMode != XR_ENVIRONMENT_BLEND_MODE_ALPHA_BLEND) {
                 return OpenXrApi::xrEndFrame(session, frameEndInfo);
             }
 

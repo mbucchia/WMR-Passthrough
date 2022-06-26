@@ -26,6 +26,18 @@
 
 namespace passthrough {
 
+// Comment out the definition below to restore OPAQUE as the preferred blend mode.
+#define XR_WMR_PASSTHROUGH_PREFER_ALPHA_BLEND
+
+// Uncomment the definition below to tweak the passthrough camera color to "all business blue".
+//#define XR_WMR_PASSTHROUGH_COLOR_ADJUSTMENT 0.f, 161.f / 255.f, 241.f / 255.f
+
+// Uncomment the definition below to tweak the passthrough camera color to sepia.
+//#define XR_WMR_PASSTHROUGH_COLOR_ADJUSTMENT 112.f / 255.f, 66.f / 255.f, 20.f / 255.f
+
+// Uncomment the definition below to tweak the passthrough camera color to gray.
+#define XR_WMR_PASSTHROUGH_COLOR_ADJUSTMENT 0.75f, 0.75f, 0.75f
+
     const std::string LayerName = "XR_APILAYER_NOVENDOR_wmr_passthrough";
     const uint32_t VersionMajor = 0;
     const uint32_t VersionMinor = 0;
