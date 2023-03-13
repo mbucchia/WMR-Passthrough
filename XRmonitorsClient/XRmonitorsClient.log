@@ -1,0 +1,8 @@
+﻿  pch.cpp
+  CameraClientWrapper.cpp
+     Création de la bibliothèque D:\Dev\WMR-Passthrough-Fork\WMR-Passthrough\\bin\x64\Release\XRmonitorsClient.lib et de l'objet D:\Dev\WMR-Passthrough-Fork\WMR-Passthrough\\bin\x64\Release\XRmonitorsClient.exp
+  Génération de code en cours
+  Previous IPDB not found, fall back to full compilation.
+  All 784 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Fin de la génération du code
+  XRmonitorsClient.vcxproj -> D:\Dev\WMR-Passthrough-Fork\WMR-Passthrough\bin\x64\Release\XRmonitorsClient.dll
