@@ -658,28 +658,28 @@ float4 psMain(PSVertex input) : SV_TARGET {
 
             // HACK: Remove 32 byte tags from the image
             const unsigned offset = 23264 + 1312 - 32;
-            unsigned nextTagOffset = offset - 1312 + 32;
+            unsigned nextTagOffset = offset - 1312 + 32 - 1280;
 
             unsigned brightSumCount = 0;
             int brightSum = 0;
 
             auto image = frame.CameraImage;
             for (unsigned i = 0; i < frame.Height; ++i) {
-                if (nextTagOffset < frame.Width) {
+                if (nextTagOffset < frame.Width * 2) {
                     memcpy(dest, image, nextTagOffset);
                     image += 32;
-                    memcpy(dest + nextTagOffset, image + nextTagOffset, frame.Width - nextTagOffset);
-                    nextTagOffset = offset - (frame.Width - nextTagOffset);
+                    memcpy(dest + nextTagOffset, image + nextTagOffset, frame.Width * 2 - nextTagOffset);
+                    nextTagOffset = offset - (frame.Width * 2 - nextTagOffset);
                 } else {
-                    memcpy(dest, image, frame.Width);
-                    nextTagOffset -= frame.Width;
+                    memcpy(dest, image, frame.Width * 2);
+                    nextTagOffset -= frame.Width * 2;
 
-                    for (unsigned j = 0; j < frame.Width; j += 32) {
+                    for (unsigned j = 0; j < frame.Width * 2; j += 32) {
                         brightSum += image[j];
                     }
                     ++brightSumCount;
                 }
-                image += frame.Width;
+                image += frame.Width * 2;
                 dest += pitch;
             }
 
